@@ -8,19 +8,30 @@ import java.util.Comparator;
  * Created by yradex on 2016/11/23.
  */
 
-public interface Record extends Serializable {
+interface Record extends Serializable {
+
+    int getId();
+
     Calendar getNextTriggerTime();
 
     boolean isActive();
+
+    Class activityToHandleThisAlarm();
 }
 
 class RecordComparator implements Comparator<Record> {
 
     @Override
     public int compare(Record o1, Record o2) {
-        if (o1.isActive() != o2.isActive()) {
-            return o1.isActive() ? -1 : 1;
+        if (o1 == null) {
+            if (o2 == null) {
+                return 0;
+            }
+            return 1;
         }
-        return o1.getNextTriggerTime().compareTo(o2.getNextTriggerTime());
+        if (o2 == null) {
+            return -1;
+        }
+        return o1.getId() - o2.getId();
     }
 }

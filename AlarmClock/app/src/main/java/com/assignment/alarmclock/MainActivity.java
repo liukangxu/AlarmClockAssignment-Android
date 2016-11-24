@@ -10,14 +10,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
+        AlarmManager.globalInitialize(this);
     }
 
     public void runService(View view) {
-        AlarmManager.getInstance(this).invokeAfterFiveSeconds(TestActivity.class.getName());
+        AlarmManager alarmManager = new AlarmManager(this);
+        TestRecord record = new TestRecord(alarmManager.getUniqueId(RecordType.ALARM));
+        alarmManager.insertAlarmRecord(record);
     }
 }
