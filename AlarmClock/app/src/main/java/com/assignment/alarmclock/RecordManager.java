@@ -14,7 +14,7 @@ enum RecordManager {
 
     instance;
 
-    private final RecordComparator comparator = new RecordComparator();
+    private final RecordComparatorById idComparator = new RecordComparatorById();
     private final LinkedList<Record> alarmRecordList = new LinkedList<>();
     private final LinkedList<Record> timerRecordList = new LinkedList<>();
     private final LinkedList<Record> anniversaryRecordList = new LinkedList<>();
@@ -58,17 +58,17 @@ enum RecordManager {
 
     void insertAlarmRecord(Record r) {
         this.alarmRecordList.add(r);
-        Collections.sort(this.alarmRecordList, this.comparator);
+        Collections.sort(this.alarmRecordList, this.idComparator);
     }
 
     void insertTimerRecord(Record r) {
         this.timerRecordList.add(r);
-        Collections.sort(this.timerRecordList, this.comparator);
+        Collections.sort(this.timerRecordList, this.idComparator);
     }
 
     void insertAnniversaryRecord(Record r) {
         this.anniversaryRecordList.add(r);
-        Collections.sort(this.anniversaryRecordList, this.comparator);
+        Collections.sort(this.anniversaryRecordList, this.idComparator);
     }
 
     boolean removeAlarmRecord(Record r) {
@@ -92,6 +92,11 @@ enum RecordManager {
             }
 
             @Override
+            public void setId(int id) {
+
+            }
+
+            @Override
             public Calendar getNextTriggerTime() {
                 return null;
             }
@@ -109,21 +114,21 @@ enum RecordManager {
 
         int typeIdentifier = id % RecordType.EOF.getValue();
         if (typeIdentifier == RecordType.ALARM.getValue()) {
-            int index = Collections.binarySearch(this.alarmRecordList, record, this.comparator);
+            int index = Collections.binarySearch(this.alarmRecordList, record, this.idComparator);
             if (index < 0) {
                 return null;
             }
             return this.alarmRecordList.get(index);
         }
         if (typeIdentifier == RecordType.TIMER.getValue()) {
-            int index = Collections.binarySearch(this.timerRecordList, record, this.comparator);
+            int index = Collections.binarySearch(this.timerRecordList, record, this.idComparator);
             if (index < 0) {
                 return null;
             }
             return this.timerRecordList.get(index);
         }
         if (typeIdentifier == RecordType.ANNIVERSARY.getValue()) {
-            int index = Collections.binarySearch(this.anniversaryRecordList, record, this.comparator);
+            int index = Collections.binarySearch(this.anniversaryRecordList, record, this.idComparator);
             if (index < 0) {
                 return null;
             }

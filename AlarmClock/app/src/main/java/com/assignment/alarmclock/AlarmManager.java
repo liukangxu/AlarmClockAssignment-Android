@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -31,10 +30,6 @@ final class AlarmManager {
         }
         initialized = true;
         // TODO
-    }
-
-    int getUniqueId(RecordType type) {
-        return RecordManager.instance.getUniqueId(type);
     }
 
     /**
@@ -65,16 +60,19 @@ final class AlarmManager {
     }
 
     void insertAlarmRecord(Record r) {
+        r.setId(RecordManager.instance.getUniqueId(RecordType.ALARM));
         RecordManager.instance.insertAlarmRecord(r);
         registerAlarm(r);
     }
 
     void insertTimerRecord(Record r) {
+        r.setId(RecordManager.instance.getUniqueId(RecordType.TIMER));
         RecordManager.instance.insertTimerRecord(r);
         registerAlarm(r);
     }
 
     void insertAnniversaryRecord(Record r) {
+        r.setId(RecordManager.instance.getUniqueId(RecordType.ANNIVERSARY));
         RecordManager.instance.insertAnniversaryRecord(r);
         registerAlarm(r);
     }
@@ -92,20 +90,6 @@ final class AlarmManager {
     void removeAnniversaryRecord(Record r) {
         RecordManager.instance.removeAnniversaryRecord(r);
         cancelAlarm(r);
-    }
-
-    @Deprecated
-    void invokeAfterFiveSeconds(String activityName) {
-        Intent intent = new Intent(ACTION_WAKEUP);
-        intent.putExtra("class", activityName);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, 0, intent, 0);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 5);
-
-        android.app.AlarmManager
-                alarmManager = (android.app.AlarmManager) this.context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(android.app.AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
     void wakeUpByAlarm(int id) {

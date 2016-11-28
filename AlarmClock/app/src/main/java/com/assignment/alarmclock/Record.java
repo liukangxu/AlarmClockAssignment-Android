@@ -12,6 +12,8 @@ interface Record extends Serializable {
 
     int getId();
 
+    void setId(int id);
+
     Calendar getNextTriggerTime();
 
     boolean isActive();
@@ -19,7 +21,7 @@ interface Record extends Serializable {
     Class activityToHandleThisAlarm();
 }
 
-class RecordComparator implements Comparator<Record> {
+class RecordComparatorById implements Comparator<Record> {
 
     @Override
     public int compare(Record o1, Record o2) {
