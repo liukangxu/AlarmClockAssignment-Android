@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void runService(View view) {
         AlarmManager alarmManager = new AlarmManager(this);
-        TestRecord record = new TestRecord(alarmManager.getUniqueId(RecordType.ALARM));
+        TestRecord record = new TestRecord();
         alarmManager.insertAlarmRecord(record);
     }
 }

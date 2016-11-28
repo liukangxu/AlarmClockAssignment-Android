@@ -19,11 +19,9 @@ public class TestActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.textView2);
         textView.setText("alarm id: " + Integer.toString(recordId));
 
-        AlarmManager alarmManager = new AlarmManager(this);
-        Record record = alarmManager.getRecordById(recordId);
-
         Log.d("TestActivity", "triggered alarm: " + Integer.toString(recordId));
 
-        alarmManager.removeAlarmRecord(record);
+        AlarmManager alarmManager = new AlarmManager(this);
+        alarmManager.removeAlarmRecord(recordId);
     }
 }

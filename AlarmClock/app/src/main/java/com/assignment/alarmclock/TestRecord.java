@@ -11,11 +11,10 @@ import java.util.Calendar;
 
 class TestRecord implements Record {
 
-    private final int id;
+    private int id;
     private Calendar calendar = Calendar.getInstance();
 
-    TestRecord(int id) {
-        this.id = id;
+    TestRecord() {
         this.calendar.add(Calendar.SECOND, 5);
         Log.d("Record", Long.toString(this.calendar.getTimeInMillis()));
     }
@@ -23,6 +22,11 @@ class TestRecord implements Record {
     @Override
     public int getId() {
         return this.id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

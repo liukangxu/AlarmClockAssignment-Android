@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -30,11 +29,8 @@ final class AlarmManager {
             return;
         }
         initialized = true;
-        // TODO
-    }
 
-    int getUniqueId(RecordType type) {
-        return RecordManager.instance.getUniqueId(type);
+        // TODO
     }
 
     /**
@@ -65,47 +61,51 @@ final class AlarmManager {
     }
 
     void insertAlarmRecord(Record r) {
-        RecordManager.instance.insertAlarmRecord(r);
+        r.setId(RecordManager.instance.getUniqueId(RecordType.ALARM));
+        Record old = RecordManager.instance.insertAlarmRecord(r);
+        if (old != null) {
+            cancelAlarm(old);
+        }
         registerAlarm(r);
     }
 
     void insertTimerRecord(Record r) {
-        RecordManager.instance.insertTimerRecord(r);
+        r.setId(RecordManager.instance.getUniqueId(RecordType.TIMER));
+        Record old = RecordManager.instance.insertTimerRecord(r);
+        if (old != null) {
+            cancelAlarm(old);
+        }
         registerAlarm(r);
     }
 
     void insertAnniversaryRecord(Record r) {
-        RecordManager.instance.insertAnniversaryRecord(r);
+        r.setId(RecordManager.instance.getUniqueId(RecordType.ANNIVERSARY));
+        Record old = RecordManager.instance.insertAnniversaryRecord(r);
+        if (old != null) {
+            cancelAlarm(old);
+        }
         registerAlarm(r);
     }
 
-    void removeAlarmRecord(Record r) {
-        RecordManager.instance.removeAlarmRecord(r);
-        cancelAlarm(r);
+    void removeAlarmRecord(int id) {
+        Record old = RecordManager.instance.removeAlarmRecord(id);
+        if (old != null) {
+            cancelAlarm(old);
+        }
     }
 
-    void removeTimerRecord(Record r) {
-        RecordManager.instance.removeTimerRecord(r);
-        cancelAlarm(r);
+    void removeTimerRecord(int id) {
+        Record old = RecordManager.instance.removeTimerRecord(id);
+        if (old != null) {
+            cancelAlarm(old);
+        }
     }
 
-    void removeAnniversaryRecord(Record r) {
-        RecordManager.instance.removeAnniversaryRecord(r);
-        cancelAlarm(r);
-    }
-
-    @Deprecated
-    void invokeAfterFiveSeconds(String activityName) {
-        Intent intent = new Intent(ACTION_WAKEUP);
-        intent.putExtra("class", activityName);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, 0, intent, 0);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 5);
-
-        android.app.AlarmManager
-                alarmManager = (android.app.AlarmManager) this.context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(android.app.AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+    void removeAnniversaryRecord(int id) {
+        Record old = RecordManager.instance.removeAnniversaryRecord(id);
+        if (old != null) {
+            cancelAlarm(old);
+        }
     }
 
     void wakeUpByAlarm(int id) {
@@ -138,6 +138,10 @@ final class AlarmManager {
 
             Log.d("AlarmManager", "set alarm " + record.getId());
         }
+    }
+
+    private void read_from_database() {
+        // TODO
     }
 
     Record getRecordById(int id) {

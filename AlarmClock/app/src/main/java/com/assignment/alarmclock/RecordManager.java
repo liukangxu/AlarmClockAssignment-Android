@@ -1,9 +1,9 @@
 package com.assignment.alarmclock;
 
+import android.annotation.SuppressLint;
+
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,10 +14,12 @@ enum RecordManager {
 
     instance;
 
-    private final RecordComparator comparator = new RecordComparator();
-    private final LinkedList<Record> alarmRecordList = new LinkedList<>();
-    private final LinkedList<Record> timerRecordList = new LinkedList<>();
-    private final LinkedList<Record> anniversaryRecordList = new LinkedList<>();
+    @SuppressLint("UseSparseArrays")
+    private final HashMap<Integer, Record> alarmRecordList = new HashMap<>();
+    @SuppressLint("UseSparseArrays")
+    private final HashMap<Integer, Record> timerRecordList = new HashMap<>();
+    @SuppressLint("UseSparseArrays")
+    private final HashMap<Integer, Record> anniversaryRecordList = new HashMap<>();
     private int id = 1;
 
     int getUniqueId(RecordType type) {
@@ -35,7 +37,7 @@ enum RecordManager {
      * @return A copy of the original AlarmRecordList.
      */
     List<Record> getAlarmRecordList() {
-        return new ArrayList<>(this.alarmRecordList);
+        return new ArrayList<>(this.alarmRecordList.values());
     }
 
     /**
@@ -44,7 +46,7 @@ enum RecordManager {
      * @return A copy of the original CountDownRecordList.
      */
     List<Record> getTimerRecordList() {
-        return new ArrayList<>(this.timerRecordList);
+        return new ArrayList<>(this.timerRecordList.values());
     }
 
     /**
@@ -53,81 +55,44 @@ enum RecordManager {
      * @return A copy of the original AnniversaryRecordQueue.
      */
     List<Record> getAnniversaryRecordList() {
-        return new ArrayList<>(this.anniversaryRecordList);
+        return new ArrayList<>(this.anniversaryRecordList.values());
     }
 
-    void insertAlarmRecord(Record r) {
-        this.alarmRecordList.add(r);
-        Collections.sort(this.alarmRecordList, this.comparator);
+    Record insertAlarmRecord(Record r) {
+        return alarmRecordList.put(r.getId(), r);
     }
 
-    void insertTimerRecord(Record r) {
-        this.timerRecordList.add(r);
-        Collections.sort(this.timerRecordList, this.comparator);
+    Record insertTimerRecord(Record r) {
+        return timerRecordList.put(r.getId(), r);
     }
 
-    void insertAnniversaryRecord(Record r) {
-        this.anniversaryRecordList.add(r);
-        Collections.sort(this.anniversaryRecordList, this.comparator);
+    Record insertAnniversaryRecord(Record r) {
+        return anniversaryRecordList.put(r.getId(), r);
     }
 
-    boolean removeAlarmRecord(Record r) {
-        return this.alarmRecordList.remove(r);
+    Record removeAlarmRecord(int id) {
+        return alarmRecordList.remove(id);
     }
 
-    boolean removeTimerRecord(Record r) {
-        return this.timerRecordList.remove(r);
+    Record removeTimerRecord(int id) {
+        return timerRecordList.remove(id);
     }
 
-    boolean removeAnniversaryRecord(Record r) {
-        return this.anniversaryRecordList.remove(r);
+    Record removeAnniversaryRecord(int id) {
+        return anniversaryRecordList.remove(id);
     }
 
     Record getRecordById(int id) {
-        final int nid = id;
-        Record record = new Record() {
-            @Override
-            public int getId() {
-                return nid;
-            }
-
-            @Override
-            public Calendar getNextTriggerTime() {
-                return null;
-            }
-
-            @Override
-            public boolean isActive() {
-                return false;
-            }
-
-            @Override
-            public Class activityToHandleThisAlarm() {
-                return null;
-            }
-        };
-
         int typeIdentifier = id % RecordType.EOF.getValue();
+
         if (typeIdentifier == RecordType.ALARM.getValue()) {
-            int index = Collections.binarySearch(this.alarmRecordList, record, this.comparator);
-            if (index < 0) {
-                return null;
-            }
-            return this.alarmRecordList.get(index);
+            return alarmRecordList.get(id);
         }
         if (typeIdentifier == RecordType.TIMER.getValue()) {
-            int index = Collections.binarySearch(this.timerRecordList, record, this.comparator);
-            if (index < 0) {
-                return null;
-            }
-            return this.timerRecordList.get(index);
+            return timerRecordList.get(id);
         }
         if (typeIdentifier == RecordType.ANNIVERSARY.getValue()) {
-            int index = Collections.binarySearch(this.anniversaryRecordList, record, this.comparator);
-            if (index < 0) {
-                return null;
-            }
-            return this.anniversaryRecordList.get(index);
+            return anniversaryRecordList.get(id);
         }
         return null;
     }
