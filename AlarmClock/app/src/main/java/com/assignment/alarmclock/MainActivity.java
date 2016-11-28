@@ -18,4 +18,9 @@ public class MainActivity extends AppCompatActivity {
         TestRecord record = new TestRecord();
         alarmManager.insertAlarmRecord(record);
     }
+
+    public void clearDatabase(View view) {
+        AlarmManager alarmManager = new AlarmManager(this);
+        alarmManager.clearDatabase();
+    }
 }

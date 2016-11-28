@@ -1,7 +1,5 @@
 package com.assignment.alarmclock;
 
-import android.util.Log;
-
 import java.util.Calendar;
 
 /**
@@ -16,7 +14,6 @@ class TestRecord implements Record {
 
     TestRecord() {
         this.calendar.add(Calendar.SECOND, 5);
-        Log.d("Record", Long.toString(this.calendar.getTimeInMillis()));
     }
 
     @Override

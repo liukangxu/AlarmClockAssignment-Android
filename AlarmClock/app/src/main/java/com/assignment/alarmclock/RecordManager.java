@@ -22,6 +22,10 @@ enum RecordManager {
     private final HashMap<Integer, Record> anniversaryRecordList = new HashMap<>();
     private int id = 1;
 
+    public void setCurrentId(int id) {
+        this.id = id;
+    }
+
     int getUniqueId(RecordType type) {
         int sub = type.getValue() - this.id % RecordType.EOF.getValue();
         if (sub <= 0) {
@@ -29,6 +33,21 @@ enum RecordManager {
         }
         this.id += sub;
         return this.id;
+    }
+
+    RecordType getRecordTypeById(int id) {
+        int typeIdentifier = id % RecordType.EOF.getValue();
+
+        if (typeIdentifier == RecordType.ALARM.getValue()) {
+            return RecordType.ALARM;
+        }
+        if (typeIdentifier == RecordType.TIMER.getValue()) {
+            return RecordType.TIMER;
+        }
+        if (typeIdentifier == RecordType.ANNIVERSARY.getValue()) {
+            return RecordType.ANNIVERSARY;
+        }
+        return RecordType.EOF;
     }
 
     /**
@@ -83,16 +102,15 @@ enum RecordManager {
     }
 
     Record getRecordById(int id) {
-        int typeIdentifier = id % RecordType.EOF.getValue();
-
-        if (typeIdentifier == RecordType.ALARM.getValue()) {
-            return alarmRecordList.get(id);
-        }
-        if (typeIdentifier == RecordType.TIMER.getValue()) {
-            return timerRecordList.get(id);
-        }
-        if (typeIdentifier == RecordType.ANNIVERSARY.getValue()) {
-            return anniversaryRecordList.get(id);
+        switch (getRecordTypeById(id)) {
+            case ALARM:
+                return alarmRecordList.get(id);
+            case TIMER:
+                return timerRecordList.get(id);
+            case ANNIVERSARY:
+                return anniversaryRecordList.get(id);
+            case EOF:
+                return null;
         }
         return null;
     }
