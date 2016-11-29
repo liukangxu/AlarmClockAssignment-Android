@@ -8,16 +8,15 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by yradex on 2016/11/28.
  */
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "record_database";
+    static final String RECORD_TABLE_NAME = "record_table";
+    static final String RECORD_ID_NAME = "record_id";
+    static final String RECORD_CONTENT_NAME = "content";
+    private static final String DATABASE_NAME = "record_database";
 
-    public static final String RECORD_TABLE_NAME = "record_table";
-    public static final String RECORD_ID_NAME = "record_id";
-    public static final String RECORD_CONTENT_NAME = "content";
 
-
-    public DatabaseHelper(Context context) {
+    DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 

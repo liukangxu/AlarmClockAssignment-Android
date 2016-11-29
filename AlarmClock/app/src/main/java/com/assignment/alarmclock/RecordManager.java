@@ -27,16 +27,16 @@ enum RecordManager {
     }
 
     int getUniqueId(RecordType type) {
-        int sub = type.getValue() - this.id % RecordType.EOF.getValue();
+        int sub = type.getValue() - this.id % RecordType.NULL.getValue();
         if (sub <= 0) {
-            sub += RecordType.EOF.getValue();
+            sub += RecordType.NULL.getValue();
         }
         this.id += sub;
         return this.id;
     }
 
     RecordType getRecordTypeById(int id) {
-        int typeIdentifier = id % RecordType.EOF.getValue();
+        int typeIdentifier = id % RecordType.NULL.getValue();
 
         if (typeIdentifier == RecordType.ALARM.getValue()) {
             return RecordType.ALARM;
@@ -47,58 +47,56 @@ enum RecordManager {
         if (typeIdentifier == RecordType.ANNIVERSARY.getValue()) {
             return RecordType.ANNIVERSARY;
         }
-        return RecordType.EOF;
+        return RecordType.NULL;
     }
 
     /**
-     * Returns a copy of the original AlarmRecordList.
+     * Returns a copy of the original Record List.
      *
-     * @return A copy of the original AlarmRecordList.
+     * @return A copy of the original Record List.
      */
-    List<Record> getAlarmRecordList() {
-        return new ArrayList<>(this.alarmRecordList.values());
+    List<Record> getRecordList(RecordType type) {
+        switch (type) {
+            case ALARM:
+                return new ArrayList<>(this.alarmRecordList.values());
+            case TIMER:
+                return new ArrayList<>(this.timerRecordList.values());
+            case ANNIVERSARY:
+                return new ArrayList<>(this.anniversaryRecordList.values());
+            case NULL:
+                return null;
+        }
+        return null;
     }
 
-    /**
-     * Returns a copy of the original CountDownRecordList.
-     *
-     * @return A copy of the original CountDownRecordList.
-     */
-    List<Record> getTimerRecordList() {
-        return new ArrayList<>(this.timerRecordList.values());
+    Record insertRecord(Record record) {
+        RecordType type = getRecordTypeById(record.getId());
+        switch (type) {
+            case ALARM:
+                return alarmRecordList.put(record.getId(), record);
+            case TIMER:
+                return timerRecordList.put(record.getId(), record);
+            case ANNIVERSARY:
+                return anniversaryRecordList.put(record.getId(), record);
+            case NULL:
+                throw new IllegalArgumentException();
+        }
+        return null;
     }
 
-    /**
-     * Returns a copy of the original AnniversaryRecordQueue.
-     *
-     * @return A copy of the original AnniversaryRecordQueue.
-     */
-    List<Record> getAnniversaryRecordList() {
-        return new ArrayList<>(this.anniversaryRecordList.values());
-    }
-
-    Record insertAlarmRecord(Record r) {
-        return alarmRecordList.put(r.getId(), r);
-    }
-
-    Record insertTimerRecord(Record r) {
-        return timerRecordList.put(r.getId(), r);
-    }
-
-    Record insertAnniversaryRecord(Record r) {
-        return anniversaryRecordList.put(r.getId(), r);
-    }
-
-    Record removeAlarmRecord(int id) {
-        return alarmRecordList.remove(id);
-    }
-
-    Record removeTimerRecord(int id) {
-        return timerRecordList.remove(id);
-    }
-
-    Record removeAnniversaryRecord(int id) {
-        return anniversaryRecordList.remove(id);
+    Record removeRecord(int id) {
+        RecordType type = getRecordTypeById(id);
+        switch (type) {
+            case ALARM:
+                return alarmRecordList.remove(id);
+            case TIMER:
+                return timerRecordList.remove(id);
+            case ANNIVERSARY:
+                return anniversaryRecordList.remove(id);
+            case NULL:
+                break;
+        }
+        return null;
     }
 
     Record getRecordById(int id) {
@@ -109,26 +107,17 @@ enum RecordManager {
                 return timerRecordList.get(id);
             case ANNIVERSARY:
                 return anniversaryRecordList.get(id);
-            case EOF:
+            case NULL:
                 return null;
         }
         return null;
     }
 
-}
-
-enum RecordType {
-    ALARM(0), TIMER(1), ANNIVERSARY(2), EOF(3);
-
-    private Integer value;
-
-    RecordType(int value) {
-        this.value = value;
+    void clear() {
+        alarmRecordList.clear();
+        timerRecordList.clear();
+        anniversaryRecordList.clear();
+        setCurrentId(0);
     }
-
-    public Integer getValue() {
-        return this.value;
-    }
-
 
 }

@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     public void runService(View view) {
         AlarmManager alarmManager = new AlarmManager(this);
         TestRecord record = new TestRecord();
-        alarmManager.insertAlarmRecord(record);
+        alarmManager.insertRecord(RecordType.ALARM, record);
     }
 
     public void clearDatabase(View view) {

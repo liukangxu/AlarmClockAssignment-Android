@@ -18,6 +18,10 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
+ * 程序记录的管理器。
+ * <p>
+ * 自动持久化所有记录，自动安排记录的触发。
+ * <p>
  * Created by yradex on 2016/11/23.
  */
 
@@ -48,151 +52,60 @@ public final class AlarmManager {
         alarmManager.initReadFromDatabase();
     }
 
+
     /**
-     * 取得所有闹钟记录的列表。不保证该列表中元素的顺序。
+     * 取得所有记录的列表。不保证该列表中元素的顺序。
      * <p>
      * 在这个列表中进行修改不会影响到后台服务的工作。
      *
-     * @return 所有闹钟记录的列表
+     * @param type 需要查询的记录类型
+     * @return 所有指定类型记录的列表
      */
-    public List<Record> getAlarmRecordList() {
-        return RecordManager.instance.getAlarmRecordList();
-    }
-
-    /**
-     * 取得所有定时器记录的列表。不保证该列表中元素的顺序。
-     * <p>
-     * 在这个列表中进行修改不会影响到后台服务的工作。
-     *
-     * @return 所有定时器记录的列表
-     */
-    public List<Record> getCountDownRecordList() {
-        return RecordManager.instance.getTimerRecordList();
-    }
-
-    /**
-     * 取得所有定时器记录的列表。不保证该列表中元素的顺序。
-     * <p>
-     * 在这个列表中进行修改不会影响到后台服务的工作。
-     *
-     * @return 所有定时器记录的列表
-     */
-    public List<Record> getAnniversaryRecordList() {
-        return RecordManager.instance.getAnniversaryRecordList();
-    }
-
-    private void insertRecordWithId(Record r) {
-        int id = r.getId();
-        switch (RecordManager.instance.getRecordTypeById(id)) {
-            case ALARM:
-                RecordManager.instance.insertAlarmRecord(r);
-                registerAlarm(r);
-            case TIMER:
-                RecordManager.instance.insertTimerRecord(r);
-                registerAlarm(r);
-            case ANNIVERSARY:
-                RecordManager.instance.insertAnniversaryRecord(r);
-                registerAlarm(r);
-            case EOF:
-                break;
+    public List<Record> getRecordList(RecordType type) {
+        if (type == RecordType.NULL) {
+            throw new IllegalArgumentException();
         }
+        return RecordManager.instance.getRecordList(type);
+    }
+
+    private void insertRecordFromDatabase(Record r) {
+        RecordManager.instance.insertRecord(r);
+        registerAlarm(r);
     }
 
     /**
-     * 向后台服务插入一个闹钟记录。记录的 id 将会被后台服务自动设定。
+     * 向后台服务插入一个记录。记录的 id 将会被后台服务自动设定。
      * <p>
      * 该记录将被安排定时触发。
      *
-     * @param r 需要插入的闹钟记录
+     * @param type   记录的类型
+     * @param record 需要插入的记录
      */
-    public void insertAlarmRecord(Record r) {
-        r.setId(RecordManager.instance.getUniqueId(RecordType.ALARM));
-        Record old = RecordManager.instance.insertAlarmRecord(r);
+    public void insertRecord(RecordType type, Record record) {
+        if (type == RecordType.NULL) {
+            throw new IllegalArgumentException();
+        }
+        record.setId(RecordManager.instance.getUniqueId(type));
+        Record old = RecordManager.instance.insertRecord(record);
         if (old != null) {
-            cancelAlarm(old);
+            cancelAlarm(old.getId());
             removeRecordFromDatabase(old);
         }
-        registerAlarm(r);
-        writeRecordToDatabase(r);
+        registerAlarm(record);
+        writeRecordToDatabase(record);
     }
 
     /**
-     * 向后台服务插入一个定时器记录。记录的 id 将会被后台服务自动设定。
-     * <p>
-     * 该记录将被安排定时触发。
-     *
-     * @param r 需要插入的定时器记录
-     */
-    public void insertTimerRecord(Record r) {
-        r.setId(RecordManager.instance.getUniqueId(RecordType.TIMER));
-        Record old = RecordManager.instance.insertTimerRecord(r);
-        if (old != null) {
-            cancelAlarm(old);
-            removeRecordFromDatabase(old);
-        }
-        registerAlarm(r);
-        writeRecordToDatabase(r);
-    }
-
-    /**
-     * 向后台服务插入一个纪念日记录。记录的 id 将会被后台服务自动设定。
-     * <p>
-     * 该记录将被安排定时触发。
-     *
-     * @param r 需要插入的纪念日记录
-     */
-    public void insertAnniversaryRecord(Record r) {
-        r.setId(RecordManager.instance.getUniqueId(RecordType.ANNIVERSARY));
-        Record old = RecordManager.instance.insertAnniversaryRecord(r);
-        if (old != null) {
-            cancelAlarm(old);
-            removeRecordFromDatabase(old);
-        }
-        registerAlarm(r);
-        writeRecordToDatabase(r);
-    }
-
-    /**
-     * 从后台服务删除一个闹钟记录。
+     * 从后台服务删除一个记录。
      * <p>
      * 该记录将被取消定时触发。
      *
      * @param id 需要删除的记录的 id
      */
-    public void removeAlarmRecord(int id) {
-        Record old = RecordManager.instance.removeAlarmRecord(id);
+    public void removeRecord(int id) {
+        Record old = RecordManager.instance.removeRecord(id);
         if (old != null) {
-            cancelAlarm(old);
-            removeRecordFromDatabase(old);
-        }
-    }
-
-    /**
-     * 从后台服务删除一个定时器记录。
-     * <p>
-     * 该记录将被取消定时触发。
-     *
-     * @param id 需要删除的记录的 id
-     */
-    public void removeTimerRecord(int id) {
-        Record old = RecordManager.instance.removeTimerRecord(id);
-        if (old != null) {
-            cancelAlarm(old);
-            removeRecordFromDatabase(old);
-        }
-    }
-
-    /**
-     * 从后台服务删除一个纪念日记录。
-     * <p>
-     * 该记录将被取消定时触发。
-     *
-     * @param id 需要删除的记录的 id
-     */
-    public void removeAnniversaryRecord(int id) {
-        Record old = RecordManager.instance.removeAnniversaryRecord(id);
-        if (old != null) {
-            cancelAlarm(old);
+            cancelAlarm(old.getId());
             removeRecordFromDatabase(old);
         }
     }
@@ -202,12 +115,12 @@ public final class AlarmManager {
         registerAlarm(record);
     }
 
-    private void cancelAlarm(Record record) {
+    private void cancelAlarm(int id) {
         android.app.AlarmManager
                 alarmManager = (android.app.AlarmManager) this.context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(PendingIntent.getBroadcast(this.context, record.getId(), new Intent(ACTION_WAKEUP), 0));
+        alarmManager.cancel(PendingIntent.getBroadcast(this.context, id, new Intent(ACTION_WAKEUP), 0));
 
-        Log.d("AlarmManager", "Canceled Alarm " + record.getId());
+        Log.d("AlarmManager", "Canceled Alarm " + id);
     }
 
     private void registerAlarm(Record record) {
@@ -247,7 +160,7 @@ public final class AlarmManager {
             try {
                 ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
                 record = (Record) objectInputStream.readObject();
-                insertRecordWithId(record);
+                insertRecordFromDatabase(record);
             } catch (ClassNotFoundException | IOException e) {
                 e.printStackTrace();
             }
@@ -290,7 +203,13 @@ public final class AlarmManager {
         database.close();
     }
 
-    void clearDatabase() {
+    /**
+     * 清空程序的数据库。
+     * <p>
+     * 程序的所有记录将会清空。仅供测试使用。
+     */
+    public void clearDatabase() {
+        RecordManager.instance.clear();
         SQLiteDatabase database = new DatabaseHelper(context).getWritableDatabase();
         database.delete(DatabaseHelper.RECORD_TABLE_NAME, null, null);
         database.close();

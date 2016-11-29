@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-class TestActivity extends AppCompatActivity {
+public class TestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,6 @@ class TestActivity extends AppCompatActivity {
         Log.d("TestActivity", "triggered alarm: " + Integer.toString(recordId));
 
         AlarmManager alarmManager = new AlarmManager(this);
-        alarmManager.removeAlarmRecord(recordId);
+        alarmManager.removeRecord(recordId);
     }
 }

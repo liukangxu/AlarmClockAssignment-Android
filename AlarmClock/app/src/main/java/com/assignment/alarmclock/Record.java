@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
+ * 所有记录的接口。
+ * <p>
  * Created by yradex on 2016/11/23.
  */
 

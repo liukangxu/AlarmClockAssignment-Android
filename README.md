@@ -18,7 +18,7 @@ Record 接口是所有记录项需要实现的接口。
 
 ===
 
-代码直接运行就能够看到一个小小的唤醒示例。其代码主要在 MainActivity.java , TestRecord.java 和 TestActivity.java 中。
+代码直接运行就能够看到一个小小的唤醒示例。其代码主要在 MainActivity.java , TestRecord.java 和 TestActivity.java 中。点击测试按钮可以注册一个 5 秒钟后触发的闹钟记录。
 
 现在可以自动根据记录唤醒指定的 activity 了，只需要添加一下闹钟记录，如 main 文件里 runService() 函数做的那样。
 
