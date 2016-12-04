@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -54,7 +56,7 @@ public final class AlarmManager {
 
 
     /**
-     * 取得所有记录的列表。不保证该列表中元素的顺序。
+     * 取得所有记录的列表。应某些人要求，列表按照记录插入的顺序排序。
      * <p>
      * 在这个列表中进行修改不会影响到后台服务的工作。
      *
@@ -65,7 +67,33 @@ public final class AlarmManager {
         if (type == RecordType.NULL) {
             throw new IllegalArgumentException();
         }
-        return RecordManager.instance.getRecordList(type);
+        List<Record> list = RecordManager.instance.getRecordList(type);
+        assert list != null;
+        Collections.sort(list, new Comparator<Record>() {
+            @Override
+            public int compare(Record o1, Record o2) {
+                return o1.getId() - o2.getId();
+            }
+        });
+        return list;
+    }
+
+    /**
+     * 取得所有记录的列表。列表按照指定的比较器进行排序。
+     * <p>
+     * 在这个列表中进行修改不会影响到后台服务的工作。
+     *
+     * @param type 需要查询的记录类型
+     * @return 所有指定类型记录的列表
+     */
+    public List<Record> getRecordList(RecordType type, Comparator<Record> recordComparator) {
+        if (type == RecordType.NULL) {
+            throw new IllegalArgumentException();
+        }
+        List<Record> list = RecordManager.instance.getRecordList(type);
+        assert list != null;
+        Collections.sort(list, recordComparator);
+        return list;
     }
 
     private void insertRecordFromDatabase(Record r) {
