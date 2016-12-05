@@ -124,6 +124,23 @@ public final class AlarmManager {
     }
 
     /**
+     * 向后台服务更新一个记录。 与提供的记录 id 相同的记录将被替换。
+     * <p>
+     * 该记录将被安排定时触发。
+     *
+     * @param record 需要更新的记录
+     */
+    public void updateRecord(Record record) {
+        Record old = RecordManager.instance.insertRecord(record);
+        if (old != null) {
+            cancelAlarm(old.getId());
+            removeRecordFromDatabase(old);
+        }
+        registerAlarm(record);
+        writeRecordToDatabase(record);
+    }
+
+    /**
      * 从后台服务删除一个记录。
      * <p>
      * 该记录将被取消定时触发。

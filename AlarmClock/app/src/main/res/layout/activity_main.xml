@@ -10,30 +10,44 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.assignment.alarmclock.MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
 
-    <Button
-        android:id="@+id/button"
+    <TextClock
+        android:id="@+id/textClockTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="181dp"
-        android:onClick="runService"
-        android:text="Test1" />
+        android:layout_marginTop="40dp"
+        android:format12Hour="k:mm"
+        android:format24Hour="k:mm"
+        android:textSize="60sp" />
+
+    <TextClock
+        android:id="@+id/textClockDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textClockTime"
+        android:layout_centerHorizontal="true"
+        android:format12Hour="MMMM dd  EE"
+        android:format24Hour="MMMM dd, yyyy  EE"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
         android:onClick="clearDatabase"
         android:text="Clear Database" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:onClick="runService"
+        android:text="Test1" />
 
 </RelativeLayout>
