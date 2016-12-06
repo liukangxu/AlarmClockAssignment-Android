@@ -267,6 +267,7 @@ public class AnniversayActivity extends AppCompatActivity {
             divid.setBackgroundColor(Color.BLACK);
             ly.addView(divid);
         }
+
         setShow();
 
     }
@@ -285,7 +286,14 @@ public class AnniversayActivity extends AppCompatActivity {
             content = (TextView) findViewById(R.id.showCount);
             content.setText(interdays + "");
         } else {
+            TextView content = (TextView) findViewById(R.id.showStatement);
+            content.setText("请添加纪念日");
 
+            content = (TextView) findViewById(R.id.showDate);
+            content.setText("请添加日期");
+
+            content = (TextView) findViewById(R.id.showCount);
+            content.setText("0");
         }
     }
 

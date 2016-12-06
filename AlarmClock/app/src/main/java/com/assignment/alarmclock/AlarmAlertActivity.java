@@ -9,12 +9,32 @@ import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+
+import java.util.Calendar;
 
 public class AlarmAlertActivity extends AppCompatActivity {
     private Vibrator vib;
     private MediaPlayer mp;
     private int alarmId;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("onDestroy", Calendar.getInstance().getTime().toString());
+
+        vib.cancel();
+        mp.stop();
+        mp.release();
+        AlarmManager alarmManager = new AlarmManager(this);
+        AlarmRecord alarmRecord = (AlarmRecord) alarmManager.getRecordById(alarmId);
+        if (!alarmRecord.isRepeat()) {
+            alarmRecord.setActive(false);
+            alarmManager.updateRecord(alarmRecord);
+        }
+        this.finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +63,7 @@ public class AlarmAlertActivity extends AppCompatActivity {
     }
 
     public void onDismissClick(View view) {
-        vib.cancel();
-        mp.stop();
-        AlarmManager alarmManager = new AlarmManager(this);
-        AlarmRecord alarmRecord = (AlarmRecord) alarmManager.getRecordById(alarmId);
-        if (!alarmRecord.isRepeat()) {
-            alarmRecord.setActive(false);
-            alarmManager.updateRecord(alarmRecord);
-        }
+        Log.d("onDismiss", Calendar.getInstance().getTime().toString());
         this.finish();
     }
 }
