@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/demo2"
+    tools:context="com.assignment.alarmclock.AnniversayActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_anniversay" />
+
+    <ScrollView
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:layout_width="fill_parent"
+        android:layout_marginTop ="300dp"
+        android:layout_height="267dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/scrollView2">
+
+        <LinearLayout
+            android:id = "@+id/ly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/showPlace"
+        android:layout_width="match_parent"
+        android:layout_marginTop ="56dp"
+        android:layout_height="244dp">
+
+
+        <TextView
+            android:text="请添加纪念日"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/showStatement"
+            android:textStyle="bold"
+            android:layout_marginTop="77dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="距离"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:layout_marginBottom="21dp"
+            android:layout_alignBottom="@+id/showStatement"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="请添加日期"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/showDate"
+            android:layout_below="@+id/showCount"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/showCount"
+            android:textSize="80sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/showStatement"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,100 +22,109 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
             android:id="@+id/textView3"
-            android:layout_weight="1"
-            tools:text="@string/repeat"
-            android:text="@string/repeat"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="@string/repeat"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_marginLeft="5dp" />
+            tools:text="@string/repeat" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp">
-
-        <ToggleButton
-            android:id="@+id/sundayToggleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textOff="@string/sunday"
-            android:textOn="@string/sunday"
-            android:checked="false" />
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
         <ToggleButton
             android:id="@+id/mondayToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="false"
             android:textOff="@string/monday"
-            android:textOn="@string/monday"
-            android:checked="false" />
+            android:textOn="@string/monday" />
 
         <ToggleButton
             android:id="@+id/tuesdayToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="false"
             android:textOff="@string/tuesday"
-            android:textOn="@string/tuesday"
-            android:checked="false" />
+            android:textOn="@string/tuesday" />
 
         <ToggleButton
             android:id="@+id/wednesdayToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="false"
             android:textOff="@string/wednesday"
-            android:textOn="@string/wednesday"
-            android:checked="false" />
+            android:textOn="@string/wednesday" />
 
         <ToggleButton
             android:id="@+id/thursdayToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="false"
             android:textOff="@string/thursday"
-            android:textOn="@string/thursday"
-            android:checked="false" />
+            android:textOn="@string/thursday" />
 
         <ToggleButton
             android:id="@+id/fridayToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="false"
             android:textOff="@string/friday"
-            android:textOn="@string/friday"
-            android:checked="false" />
+            android:textOn="@string/friday" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <ToggleButton
             android:id="@+id/saturdayToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:checked="false"
             android:textOff="@string/saturday"
-            android:textOn="@string/saturday"
-            android:checked="false" />
+            android:textOn="@string/saturday" />
+
+        <ToggleButton
+            android:id="@+id/sundayToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:textOff="@string/sunday"
+            android:textOn="@string/sunday" />
     </LinearLayout>
 
     <Button
-        android:text="@string/save"
+        android:id="@+id/save_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/save_button"
+        android:onClick="saveAlarmDetail"
+        android:text="@string/save"
         android:visibility="visible"
-        tools:text="@string/save"
-        android:onClick="saveAlarmDetail" />
+        tools:text="@string/save" />
 
 </LinearLayout>

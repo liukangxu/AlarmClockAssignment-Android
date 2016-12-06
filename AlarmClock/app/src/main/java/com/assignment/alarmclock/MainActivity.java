@@ -14,13 +14,18 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager.globalInitialize(this);
     }
 
-    public void runService(View view) {
+    public void runTimer(View view) {
         Intent intent = new Intent(this, TimerActivity.class);
         startActivity(intent);
     }
 
     public void runAlarm(View view) {
         Intent intent = new Intent(this, AlarmMainActivity.class);
+        startActivity(intent);
+    }
+
+    public void runAnni(View view) {
+        Intent intent = new Intent(this, AnniversayActivity.class);
         startActivity(intent);
     }
 

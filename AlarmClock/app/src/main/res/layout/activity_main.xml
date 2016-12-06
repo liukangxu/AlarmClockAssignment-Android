@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -18,8 +19,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:format12Hour="k:mm:ss"
-        android:format24Hour="k:mm:ss"
+        android:format12Hour="kk:mm:ss"
+        android:format24Hour="kk:mm:ss"
         android:textSize="70sp" />
 
     <TextClock
@@ -32,31 +33,49 @@
         android:format24Hour="MMMM dd, yyyy  EE"
         android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!--<Button-->
+    <!--android:id="@+id/button2"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:onClick="clearDatabase"-->
+    <!--android:text="Clear Database" />-->
+
+    <ImageButton
+        android:id="@+id/imageButton8"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/imageButton7"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="2dp"
+        android:background="#FAFAFA"
+        android:onClick="runAnni"
+        android:scaleType="fitStart"
+        app:srcCompat="@drawable/anni" />
+
+    <ImageButton
+        android:id="@+id/imageButton6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="clearDatabase"
-        android:text="Clear Database" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="28dp"
+        android:background="#FAFAFA"
+        android:onClick="runAlarm"
+        android:scaleType="fitStart"
+        app:srcCompat="@drawable/alarm" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
+    <ImageButton
+        android:id="@+id/imageButton7"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/imageButton6"
         android:layout_centerHorizontal="true"
-        android:onClick="runService"
-        android:text="Timer" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Alarm"
-        android:layout_above="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:onClick="runAlarm" />
+        android:layout_marginBottom="8dp"
+        android:background="#FAFAFA"
+        android:onClick="runTimer"
+        android:scaleType="fitStart"
+        app:srcCompat="@drawable/timer" />
 
 </RelativeLayout>

@@ -21,8 +21,7 @@
 
         <activity
             android:name=".AlarmMainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <receiver android:name=".AlarmBroadcastReceiver">
             <intent-filter>
@@ -37,9 +36,16 @@
 
         <activity android:name=".AlarmDetail" />
 
+        <activity
+            android:name=".AnniversayActivity"
+            android:label="@string/title_activity_anniversay"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".AlarmAlertActivity" />
 
-        <activity android:name=".TimerActivity" />
+        <activity
+            android:name=".TimerActivity"
+            android:label="Timer" />
     </application>
 
 </manifest>

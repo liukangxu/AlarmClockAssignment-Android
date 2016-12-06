@@ -1,23 +1,21 @@
 package com.assignment.alarmclock;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 public class AlarmAlertActivity extends AppCompatActivity {
     private Vibrator vib;
     private MediaPlayer mp;
     private int alarmId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +46,7 @@ public class AlarmAlertActivity extends AppCompatActivity {
         vib.cancel();
         mp.stop();
         AlarmManager alarmManager = new AlarmManager(this);
-        AlarmRecord alarmRecord =(AlarmRecord)alarmManager.getRecordById(alarmId);
+        AlarmRecord alarmRecord = (AlarmRecord) alarmManager.getRecordById(alarmId);
         if (!alarmRecord.isRepeat()) {
             alarmRecord.setActive(false);
             alarmManager.updateRecord(alarmRecord);

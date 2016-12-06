@@ -16,6 +16,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -34,8 +35,7 @@ public class AlarmMainActivity extends AppCompatActivity {
         alarmManager = new AlarmManager(this);
         refreshAlarmList();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_launcher);//设置导航栏图标
-        toolbar.inflateMenu(R.menu.menu_alarm_main);//设置右上角的填充菜单
+        toolbar.inflateMenu(R.menu.menu_alarm_main);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -154,11 +154,11 @@ public class AlarmMainActivity extends AppCompatActivity {
                 repeatDays += " 周六";
             }
             if (repeatDays.length() == 0) {
-                repeatDays = "不重复";
+                repeatDays = " 不重复";
             }
             HashMap<String, Object> map = new HashMap<>();
             map.put("id", alarmRecord.getId());
-            map.put("time", alarmRecord.getTime().get(Calendar.HOUR_OF_DAY) + ":" + alarmRecord.getTime().get(Calendar.MINUTE));
+            map.put("time", new DecimalFormat("00").format(alarmRecord.getTime().get(Calendar.HOUR_OF_DAY)) + ":" + new DecimalFormat("00").format(alarmRecord.getTime().get(Calendar.MINUTE)));
             map.put("repeatDays", repeatDays);
             map.put("isActive", alarmRecord.isActive());
             alarmRecordList.add(map);

@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     tools:context=".MainActivity">
+
+
+    <item
+         android:id="@+id/action_add"
+         android:orderInCategory="100"
+         android:title="ADD"
+
+          app:showAsAction="never" />
+    <item
+        android:id="@+id/action_alter"
+        android:orderInCategory="100"
+        android:title="ALTER"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_delete"
+        android:orderInCategory="100"
+        android:title="DELETE"
+        app:showAsAction="never" />
+
+
+    <!--
+       <item
+            android:id="@+id/delete"
+       android:icon="@drawable/ic_picture_in_picture_black_18dp"
+       android:showAsAction="ifRoom"
+       android:title="delete" />
+-->
+
+    </menu>
