@@ -19,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void runAlarm(View view) {
+        Intent intent = new Intent(this, AlarmMainActivity.class);
+        startActivity(intent);
+    }
+
     public void clearDatabase(View view) {
         AlarmManager alarmManager = new AlarmManager(this);
         alarmManager.clearDatabase();

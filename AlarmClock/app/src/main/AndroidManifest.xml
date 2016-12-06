@@ -19,6 +19,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".AlarmMainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <receiver android:name=".AlarmBroadcastReceiver">
             <intent-filter>
                 <action android:name="com.assignment.alarmclock.ACTION_WAKEUP" />
@@ -29,6 +34,10 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".AlarmDetail" />
+
+        <activity android:name=".AlarmAlertActivity" />
 
         <activity android:name=".TimerActivity" />
     </application>

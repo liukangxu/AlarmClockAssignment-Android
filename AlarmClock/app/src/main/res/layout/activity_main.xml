@@ -48,6 +48,15 @@
         android:layout_above="@+id/button2"
         android:layout_centerHorizontal="true"
         android:onClick="runService"
-        android:text="Test1" />
+        android:text="Timer" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alarm"
+        android:layout_above="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:onClick="runAlarm" />
 
 </RelativeLayout>
