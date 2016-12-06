@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
@@ -178,12 +177,9 @@ public final class AlarmManager {
                 return;
             }
 
-            Bundle bundle = new Bundle();
-            bundle.putString(EXTRA_CLASSNAME, record.activityToHandleThisAlarm().getName());
-            bundle.putInt(EXTRA_ALARMID, record.getId());
 
             Intent intent = new Intent(ACTION_WAKEUP);
-            intent.putExtras(bundle);
+            intent.putExtra(EXTRA_ALARMID, record.getId());
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, record.getId(), intent, 0);
 
             alarmManager.set(android.app.AlarmManager.RTC_WAKEUP, record.getNextTriggerTime().getTimeInMillis(), pendingIntent);

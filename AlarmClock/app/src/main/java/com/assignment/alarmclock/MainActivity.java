@@ -1,5 +1,6 @@
 package com.assignment.alarmclock;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,9 +15,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void runService(View view) {
-        AlarmManager alarmManager = new AlarmManager(this);
-        TestRecord record = new TestRecord();
-        alarmManager.insertRecord(RecordType.ALARM, record);
+        Intent intent = new Intent(this, TimerActivity.class);
+        startActivity(intent);
     }
 
     public void clearDatabase(View view) {

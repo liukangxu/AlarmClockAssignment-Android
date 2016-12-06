@@ -18,9 +18,9 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:format12Hour="k:mm"
-        android:format24Hour="k:mm"
-        android:textSize="60sp" />
+        android:format12Hour="k:mm:ss"
+        android:format24Hour="k:mm:ss"
+        android:textSize="70sp" />
 
     <TextClock
         android:id="@+id/textClockDate"
@@ -30,7 +30,7 @@
         android:layout_centerHorizontal="true"
         android:format12Hour="MMMM dd  EE"
         android:format24Hour="MMMM dd, yyyy  EE"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/button2"

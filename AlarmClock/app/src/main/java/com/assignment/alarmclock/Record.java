@@ -1,5 +1,7 @@
 package com.assignment.alarmclock;
 
+import android.content.Context;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -44,9 +46,22 @@ public interface Record extends Serializable {
     boolean isActive();
 
     /**
-     * 取得该记录被激活时的处理类。该类应该是 activity 的子类。一旦记录被激活，该类就会被调用。应当在该类中设定记录的处理方式。
+     * 取得用于处理该记录的回调函数。其调用将会先于 activity 的调用。如果为 null，就没有回调函数被调用。
+     *
+     * @return 用于处理该记录的回调函数
+     */
+    RecordHandler getHandler();
+
+    /**
+     * 取得该记录被激活时的处理类。该类应该是 activity 的子类。一旦记录被激活，该类就会在回调函数之后被调用。应当在该类中设定记录的处理方式。
+     * <p>
+     * 如果为 null，就不会有 activity 被激活。
      *
      * @return 该记录被激活时的处理类
      */
     Class activityToHandleThisAlarm();
+}
+
+interface RecordHandler {
+    void handle(Context context, int id);
 }
