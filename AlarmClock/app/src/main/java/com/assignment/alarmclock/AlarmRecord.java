@@ -64,7 +64,7 @@ class AlarmRecord implements Record {
                     return calendar;
                 }
                 if (repeatDays[i] && current_date.after(nextTriggerTime)) {
-                    while ((int) nextTriggerTime.get(Calendar.DAY_OF_WEEK) - 1 != i) {
+                    while (nextTriggerTime.get(Calendar.DAY_OF_WEEK) - 1 != i) {
                         nextTriggerTime.add(Calendar.DAY_OF_MONTH, 1);
                     }
                     calendar.setTime(nextTriggerTime.getTime());
@@ -76,7 +76,7 @@ class AlarmRecord implements Record {
 
             for (int i = 0; i < current_day; i++) {
                 if (repeatDays[i]) {
-                    while ((int) nextTriggerTime.get(Calendar.DAY_OF_WEEK) - 1 != i) {
+                    while (nextTriggerTime.get(Calendar.DAY_OF_WEEK) - 1 != i) {
                         nextTriggerTime.add(Calendar.DAY_OF_MONTH, 1);
                     }
                     calendar.setTime(nextTriggerTime.getTime());

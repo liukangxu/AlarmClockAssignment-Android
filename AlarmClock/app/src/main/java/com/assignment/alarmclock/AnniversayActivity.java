@@ -50,12 +50,10 @@ public class AnniversayActivity extends AppCompatActivity {
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
-            String msg = "";
             reserveStr = null;
             switch (menuItem.getItemId()) {
                 case R.id.action_add:
                     addDate(toolbar);
-                    msg += "Click edit";
                     break;
                 case R.id.action_alter:
                     reserveCal = null;
@@ -66,7 +64,6 @@ public class AnniversayActivity extends AppCompatActivity {
                         alarmManager.removeRecord(dateToShow.getId());
                     }
                     addDate(toolbar);
-                    msg += "Click share";
                     break;
                 case R.id.action_delete:
                     if (dateToShow != null) {
@@ -74,13 +71,9 @@ public class AnniversayActivity extends AppCompatActivity {
                         alarmManager.removeRecord(dateToShow.getId());
                     }
                     print();
-                    msg += "Click share";
                     break;
             }
 
-            if (!msg.equals("")) {
-                //Toast.makeText(AnniversayActivity.this, msg, Toast.LENGTH_SHORT).show();
-            }
             return true;
         }
     };
@@ -138,7 +131,6 @@ public class AnniversayActivity extends AppCompatActivity {
         DatePickerDialog pd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             //选择完时间后会调用该回调函数
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                //
                 date[0] = year;
                 date[1] = month;
                 date[2] = day;
@@ -151,32 +143,6 @@ public class AnniversayActivity extends AppCompatActivity {
         pd.show();
         reserveCal = null;
 
-
-
-        /*if(true) {
-            LinearLayout ly;
-            ly = (LinearLayout) this.findViewById(R.id.ly);
-            RelativeLayout localLy = new RelativeLayout(this);
-            Button b1 = new Button(this);
-            Button b2 = new Button(this);
-            b1.setTag(time);
-            RelativeLayout.LayoutParams s = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            s.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-
-            b2.setLayoutParams(s);
-            localLy.addView(b1);
-            localLy.addView(b2);
-            ly.addView(localLy);
-        }
-        //pd.setDateChangedListener(new datePickerListener());
-        //setContentView(pd);
-
-        /*
-        Button bt = new Button (this);
-        RelativeLayout.LayoutParams ss = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT);
-        ss.addRule(RelativeLayout.ALIGN_BOTTOM);
-        bt.setLayoutParams(ss);
-        setContentView(bt);*/
     }
 
     private void print() {
@@ -209,20 +175,15 @@ public class AnniversayActivity extends AppCompatActivity {
                 dateToShow = ar;
             final StringBuffer time = new StringBuffer();
             time.append(ar.getNextTriggerTime().get(Calendar.YEAR) + "-" + (ar.getNextTriggerTime().get(Calendar.MONTH) + 1) + "-" + ar.getNextTriggerTime().get(Calendar.DATE));
-            //b.setText(time);
-            //RelativeLayout l = (RelativeLayout)findViewById(R.id.activity_anniversary);
-            //setContentView(l);
+
             ly = (LinearLayout) findViewById(R.id.ly);
             LinearLayout localLy = new LinearLayout(AnniversayActivity.this);
             TextView b1 = new TextView(ly.getContext());
             TextView b2 = new TextView(ly.getContext());
             TextView b3 = new TextView(ly.getContext());
 
-
-            // s.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            //s.addRule(RelativeLayout.);
             TextPaint pt;
-            //b1
+
             b1.setText("  - " + time);
             s = new RelativeLayout.LayoutParams(280, 130);
             s.addRule(RelativeLayout.CENTER_VERTICAL);
@@ -230,7 +191,7 @@ public class AnniversayActivity extends AppCompatActivity {
             pt = b1.getPaint();
             pt.setFakeBoldText(true);
 
-            //b2
+
             s = new RelativeLayout.LayoutParams(550, 130);
             s.addRule(RelativeLayout.CENTER_VERTICAL);
             b2.setLayoutParams(s);
@@ -238,7 +199,7 @@ public class AnniversayActivity extends AppCompatActivity {
             b2.setTextColor(Color.BLACK);
             b2.setTextSize(20);
 
-            //b3
+
             Calendar localCl = ar.getNextTriggerTime();
             Calendar nowTime = Calendar.getInstance();
             nowTime.set(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DATE), 0, 0, 0);
@@ -258,9 +219,7 @@ public class AnniversayActivity extends AppCompatActivity {
             localLy.setId(ar.getId());
             localLy.setOnClickListener(SelectItem);
             ly.addView(localLy);
-            //ly.addView(divid);
 
-            //divider
             divid = new View(ly.getContext());
             s = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 2);
             divid.setLayoutParams(s);

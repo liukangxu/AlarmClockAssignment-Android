@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -76,6 +77,7 @@ public class TimerActivity extends AppCompatActivity {
             public void onFinish() {
                 TextView textView = (TextView) findViewById(R.id.timerTextview);
                 textView.setText(formatter.format(0) + ":" + formatter.format(0) + ":" + formatter.format(0));
+                Log.d("Timer", "finished");
 //                textView.setTextColor(Color.RED);
             }
         }.start();

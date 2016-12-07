@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 
 import java.util.Calendar;
 
@@ -64,13 +66,14 @@ class TimerRecord implements Record {
                 intent.addCategory(Intent.CATEGORY_LAUNCHER);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
                 Notification noti = new Notification.Builder(context)
                         .setContentTitle("计时结束")
                         .setContentText("计时结束")
                         .setSmallIcon(android.R.drawable.ic_popup_reminder)
                         .setContentIntent(pendingIntent)
                         .setAutoCancel(true)
+                        .setSound(alarmSound)
                         .build();
                 notificationManager.notify(0, noti);
 

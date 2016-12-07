@@ -28,7 +28,6 @@ import java.util.List;
 
 public final class AlarmManager {
 
-    static final String EXTRA_CLASSNAME = "className";
     static final String EXTRA_ALARMID = "alarmId";
     private static final String ACTION_WAKEUP = "com.assignment.alarmclock.ACTION_WAKEUP";
     private static boolean initialized = false;
@@ -182,7 +181,7 @@ public final class AlarmManager {
             intent.putExtra(EXTRA_ALARMID, record.getId());
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, record.getId(), intent, 0);
 
-            alarmManager.set(android.app.AlarmManager.RTC_WAKEUP, record.getNextTriggerTime().getTimeInMillis(), pendingIntent);
+            alarmManager.setExact(android.app.AlarmManager.RTC_WAKEUP, record.getNextTriggerTime().getTimeInMillis(), pendingIntent);
 
             Log.d("AlarmManager", "Registered Alarm " + record.getId() + " at " + record.getNextTriggerTime().getTimeInMillis());
         }
