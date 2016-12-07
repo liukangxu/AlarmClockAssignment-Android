@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -127,7 +128,26 @@ public class AlarmMainActivity extends AppCompatActivity {
 
     private ArrayList<HashMap<String, Object>> getAlarmRecordList() {
         ArrayList<HashMap<String, Object>> alarmRecordList = new ArrayList<>();
-        List<Record> alarmRecords = alarmManager.getRecordList(ALARM);
+        List<Record> alarmRecords = alarmManager.getRecordList(ALARM, new Comparator<Record>() {
+            @Override
+            public int compare(Record o1, Record o2) {
+                AlarmRecord record1 = (AlarmRecord) o1;
+                AlarmRecord record2 = (AlarmRecord) o2;
+                if (record1.getTime().get(Calendar.HOUR_OF_DAY) < record2.getTime().get(Calendar.HOUR_OF_DAY)) {
+                    return -1;
+                } else if (record1.getTime().get(Calendar.HOUR_OF_DAY) > record2.getTime().get(Calendar.HOUR_OF_DAY)) {
+                    return 1;
+                } else {
+                    if (record1.getTime().get(Calendar.MINUTE) < record2.getTime().get(Calendar.MINUTE)) {
+                        return -1;
+                    } else if (record1.getTime().get(Calendar.MINUTE) > record2.getTime().get(Calendar.MINUTE)) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        });
 
         for (int i = 0; i < alarmRecords.size(); i++) {
             String repeatDays = "";
