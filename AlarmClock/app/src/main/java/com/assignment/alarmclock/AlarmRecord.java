@@ -112,6 +112,14 @@ class AlarmRecord implements Record {
 
     @Override
     public boolean isActive() {
+        if (!isRepeat) {
+            this.calendar.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
+            this.calendar.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
+            this.calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+            while (this.calendar.before(Calendar.getInstance())) {
+                this.calendar.add(Calendar.DAY_OF_MONTH, 1);
+            }
+        }
         return isActive;
     }
 
